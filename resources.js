@@ -1,50 +1,47 @@
 
-const {PageCache, MyCache} = tables;
+const {PageCache} = tables;
 
-/** Here we can define any JavaScript-based resources and extensions to tables
 
-export class MyCustomResource extends tables.TableName {
-	// we can define our own custom POST handler
-	post(content) {
-		// do something with the incoming content;
-		return super.post(content);
-	}
-	// or custom GET handler
-	get() {
-		// we can modify this resource before returning
-		return super.get();
-	}
-}
- */
-// we can also define a custom resource without a specific table
-export class Greeting extends Resource {
-	// a "Hello, world!" handler
-	get() {
-		return { greeting: 'Hello, world!' };
-	}
-}
 
 const parseCacheControl = (cacheContolHeader) => {
 
+	// let cacheInfo = response.headers.get('Cache-Control');
+    //   // TODO: This line parses cache control header to find out how loing the data should be cached 
+    //   if (cacheInfo) {
+    //     let maxAge = cacheInfo?.match(/max-age=(\d+)/)?.[1];
+
+    //     if(maxAge === "0") {
+    //       console.error(`received max-age 0 from origin: ${cacheInfo}`)
+    //     }
+
+    //     if (maxAge)
+    //       // we can set a specific expiration time by setting context.expiresAt
+    //       // we are converting from seconds to milliseconds, but we aren't using the full
+    //       // max-age because we are using stale-while-revalidate, so this is the time until
+    //       // we refresh from origin, but _not_ the time until we consider the record
+    //       // fully expired and requiring revalidation _before_ returning it. So we kind
+    //       // of split the difference here by setting it at 70% of the max-age
+    //       context.expiresAt = Date.now() + maxAge * (1000 * EXPIRE_PERCENT);
+    //     response.data.cacheControl = cacheInfo;
+
+	// write code for cache control
+
 }
 
-export class WebPageCacheResource extends Resource {
+// The code below is the a class that is used to update the cache
+export class PageCacheResource extends Resource {
+
+	invalidate() {
+		super.invalidate();
+	  }
+	
 	async get() {
 		try{
-
-			const htmlContent = `
-						<div>
-							<h1>Hello, World!</h1>
-							<p>This is a sample HTML response in JSON format.</p>
-						</div>
-    		`;
-
-			//return {html: htmlContent }
-
-			return{
-				id: "/testPage",
-				cachedData: htmlContent
-			}
+			const pageURL = "" // URL of the page to cache
+			const cacheId = "" // id of the page to cache
+			const response = (await fetch(pageURL)); // fetch the page and get the html content to cache
+			const convertHtmlTextToStr = await response.text(); // convert the html content to string
+			return { id: cacheId, cachedData: convertHtmlTextToStr };
 			
 		}catch(e){
 			console.log("CACHING ERROR", e);
@@ -53,34 +50,11 @@ export class WebPageCacheResource extends Resource {
 	}
 }
 
-
-export class testPageCache extends Resource {
-	invalidate() {
-		super.invalidate();
-	  }
-
-	async get(){
-		
-		try{
-			console.log("FETCHING PAGE");
-			const response = (await fetch(`https://www.google.com/`));
-			console.log("RESPONSE", response);
-			const rawHtmltoStr = await response.text();
-            console.log("RESPONSE", rawHtmltoStr);
-			
-            return { id: "/testPage", cachedData: rawHtmltoStr };
-		}catch(e){
-			console.log("ERROR", e);
-		}
-		
-	}
-}
-MyCache.sourcedFrom(testPageCache, { replicationSource: true });
-
-
-
+PageCache.sourcedFrom(PageCacheResource, { replicationSource: true });
 
 // you can access the cache from the browser using the following URL: http://localhost:9926/MyCache/testPage
+
+//http://localhost:9926/PageCache/<cacheId>
 
 
 // TODO: need to clean up this repo and turn it into a template 

@@ -1,23 +1,11 @@
 ## Here we can define any tables in our database. This example shows how we define a type as a table using
 ## the type name as the table name and specifying it is an "export" available in the REST and other external protocols.
-type TableName @table @export {
-    id: ID @primaryKey # Here we define primary key (must be one)
-    name: String # we can define any other attributes here
-    tag: String @indexed # we can specify any attributes that should be indexed
-}
-
-
-
-# Turn this into an example table that developers can follow
-type MyCache @table(expiration: 3600) @export {
-	id: ID @primaryKey # Note ID should path to webpage url you are caching (e.g  in https://www.birkenstock.com/us/men/ the id should be /us/men/ )
-    cachedData: String # cachedData should be the html of the webpage you are caching stored as a string
-}
 
 # This will be the table where users can store their pages they would like to cache
 # Keep this table simple
 type PageCache @table(expiration: 3600) @export{
     # cacheControl: String
-    id: ID @primaryKey
-    cachedData: String
+    id: ID @primaryKey # Note ID should path to webpage url you are caching (e.g  in https://www.birkenstock.com/us/men/ the id should be /us/men/ ) This is our primary key Key
+    cachedData: String # cachedData should be the html of the webpage you are caching stored as a string
+
 }
