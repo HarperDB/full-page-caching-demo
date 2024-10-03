@@ -5,10 +5,17 @@
 
 # This will be the table where users can store their pages they would like to cache
 # Keep this table simple
-type PageCache @table(expiration: 3600) @export{
-    cacheControl: String # save cache control headers
-    id: ID @primaryKey # Note ID should path to webpage url you are caching (e.g  in https://www.birkenstock.com/us/men/ the id should be /us/men/ ) This is our primary key Key
-    cachedData: String # cachedData should be the html of the webpage you are caching stored as a string
+type PageCache @table(expiration: 3600) @export {
+    cacheControl: String 
+    # Stores the Cache-Control headers for the page, which dictate how caching should be handled (e.g., max-age, no-cache).
 
+    id: ID @primaryKey 
+    # The primary key representing the URL path of the cached webpage.
+    # Example: For the URL https://www.birkenstock.com/us/men/, the `id` should be "/us/men/".
+    # This allows us to uniquely identify cached pages based on their path.
+
+    cachedData: String 
+    # Stores the full HTML of the cached webpage as a string.
+    # This is the rendered content that will be served from cache on subsequent requests.
 }
 

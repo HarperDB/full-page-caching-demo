@@ -89,53 +89,54 @@ export class ExamplePageCache extends PageCache {
 
 /********************************************************************************************************** */
 
+/*
 
-// A class used to update the cache for a specific page
-// export class PageCacheResource extends PageCache {
+A class used to update the cache for a specific page
+export class PageCacheResource extends PageCache {
 
-// 	// Invalidate the cache if necessary
-// 	invalidate() {
-// 	  super.invalidate();
-// 	}
+	// Invalidate the cache if necessary
+	invalidate() {
+	  super.invalidate();
+	}
   
-// 	// Fetch the page and update the cache
-// 	async get() {
-// 	  try {
-// 		const pageURL = ``; // URL of the page to cache
-// 		const cacheId = `pageURL/ + ${this.getId()}`; // Get the ID of the page to cache (to be implemented by the user)
+	// Fetch the page and update the cache
+	async get() {
+	  try {
+		const pageURL = ``; // URL of the page to cache
+		const cacheId = `pageURL/ + ${this.getId()}`; // Get the ID of the page to cache (to be implemented by the user)
   
-// 		// Fetch the page content
-// 		const response = await fetch(pageURL);
+		// Fetch the page content
+		const response = await fetch(pageURL);
 		
-// 		if (!response.ok) {
-// 		  throw new Error(`Failed to fetch the page: ${response.status}`);
-// 		}
+		if (!response.ok) {
+		  throw new Error(`Failed to fetch the page: ${response.status}`);
+		}
   
-// 		// Convert the HTML content to string
-// 		const htmlContent = await response.text();
+		// Convert the HTML content to string
+		const htmlContent = await response.text();
   
-// 		// Return the cached data in a structured format
-// 		return { id: cacheId, cachedData: htmlContent };
+		// Return the cached data in a structured format
+		return { id: cacheId, cachedData: htmlContent };
 		
-// 	  } catch (e) {
-// 		console.log("CACHING ERROR:", e);
-// 	  }
-// 	}
-//   }
+	  } catch (e) {
+		console.log("CACHING ERROR:", e);
+	  }
+	}
+  }
   
   // Define PageCacheResource as the cache source
-  //PageCache.sourcedFrom(PageCacheResource);
+  PageCache.sourcedFrom(PageCacheResource);
+  */
   
   /*
 	  Usage Instructions:
   
-	  1. Implement the `getId()` method to define how cache IDs are generated.
+	  1. define the cache IDs.
 	  2. Customize `pageURL` based on where the page is hosted.
 	  3. Call this URL to access the cached content:
 		 http://localhost:9926/PageCacheResource/{yourCacheId}
   
 	  Example: 
-	  - Define your own logic for `getId()` to uniquely identify pages.
 	  - The returned `cachedData` will contain the HTML as a string.
   */
 
@@ -175,58 +176,5 @@ PageCache.sourcedFrom(PageCacheResource);
 // you can access the cache from the browser using the following URL: http://localhost:9926/MyCache/testPage
 
 //http://localhost:9926/PageCache/<cacheId>
-
-
-
-
-// TODO: need to create a README.md file with instructions on how to implement partial page caching
-
-
-
-// TODO: EXTRA
-
-
-
-
-
-//export class PageCache extends tables.PageCache {
-// 	get() {
-// 		return this.html;
-//    }
-
-
-// export class PageCache extends tables.PageCache {
-// 	get() {
-// 	  return { // can also return a full response header
-// 		 status: 200,
-// 		 headers: { 'Content-Type': 'text/html' },
-// 		 body: this.html
-// 		}
-// 	  }
-// 	}
-
-
-
-// http://host.com/PageCache/testPage.html
-
-
-
-// Put some thought into 
-
-// Naming component based on the the functionality of the component
-
-
-// fumctionality intent behind each component 
-
-// extenstion
-
-
-// TODO: 
-
-// What distinguishes each component from the other 
-
-
-// intent of use vs functionality of a component
-
 
 
