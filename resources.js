@@ -2,103 +2,150 @@
 const {PageCache} = tables;
 
 
-/*
 
-TODO: Example of how to cache a page
+// ***********EXAMPLE IMPLEMENTATION OF PAGE CACHE************
 
-export class testPageCache extends Resource {
+/*  
+
+******* How to implement Page Caching ********
+
+
+
+export class ExamplePageCacheResource extends Resource {
+  
+	// Invalidate cache if necessary
 	invalidate() {
-		super.invalidate();
-	  }
-
-	async get(){
+	  super.invalidate();
+	}
+  
+	// Fetch and cache the page
+	async get() {
+	  try {
+		// Fetch the page content from the external source
+		const response = await fetch(`https://www.google.com/`);
 		
-		try{
-			
-			const response = (await fetch(`https://www.google.com/`));
-			const rawHtmltoStr = await response.text();
-
-            return { id: "/testPage", cachedData: rawHtmltoStr };
-
-		}catch(e){
-			console.log("ERROR", e);
+		// Check if the response is successful (status code 200)
+		if (!response.ok) {
+		  throw new Error(`HTTP error! Status: ${response.status}`);
 		}
 		
+		// Convert raw HTML response to string
+		const rawHtmlToStr = await response.text();
+  
+		// Return the cache data
+		return { id: "/testPage", cachedData: rawHtmlToStr };
+		
+	  } catch (error) {
+		// Log any errors that occur during the fetch process
+		console.error("ERROR fetching page data:", error);
+	  }
 	}
-}
-
-PageCache.sourcedFrom(testPageCache);
-
-//http://localhost:9926/PageCache/testPage
-
+  }
+  
+  
+	// Define this class as a cache source for PageCache
+  PageCache.sourcedFrom(ExamplePageCacheResource);
+  
 
 
 
 */
 
+/********** Call this URL to access the cache: http://localhost:9926/PageCache/testPage **********/
 
 
-export class testPageCache extends Resource {
-	invalidate() {
-		super.invalidate();
-	  }
 
-	async get(){
-		
-		try{
-			
-			const response = (await fetch(`https://www.google.com/`));
-			const rawHtmltoStr = await response.text();
+//************************************************************************************************* */
 
-            return { id: "/testPage", cachedData: rawHtmltoStr };
 
-		}catch(e){
-			console.log("ERROR", e);
-		}
-		
-	}
+
+// ***********EXAMPLE IMPLEMENTATION OF HTML-ONLY CACHE RETURN************
+
+  
+
+/* 
+
+export class ExamplePageCache extends PageCache {
+  
+  // Method to return only the cached HTML string
+  get() {
+    try {
+      // Assuming `this.cachedData` contains the cached HTML string
+      if (this.cachedData) {
+        return this.cachedData;
+      } else {
+        throw new Error("No cached data found.");
+      }
+    } catch (error) {
+      console.error("ERROR fetching cached HTML:", error);
+      return "Error fetching cached HTML";
+    }
+  }
 }
 
-PageCache.sourcedFrom(testPageCache);
+********** Call this URL to access only the HTML string in the cache: http://localhost:9926/ExamplePageCache/testPage **********
 
-export class Pc extends PageCache {
-	get() {
-		let context = this.getContext();
-		// console.log("-----------", this)
-		// console.log("------------")
-		console.log("---CONTEXT", context, "--------CONTEXT 2------")
-		return this.cachedData
+*/
 
-		// http://localhost:9926/Pc/testPage
-	  
-	  }
-	}
+/********************************************************************************************************** */
 
 
-const parseCacheControl = (cacheContolHeader) => {
+// A class used to update the cache for a specific page
+// export class PageCacheResource extends PageCache {
 
-	// let cacheInfo = response.headers.get('Cache-Control');
-    //   // TODO: This line parses cache control header to find out how long  the data should be cached 
-    //   if (cacheInfo) {
-    //     let maxAge = cacheInfo?.match(/max-age=(\d+)/)?.[1];
+// 	// Invalidate the cache if necessary
+// 	invalidate() {
+// 	  super.invalidate();
+// 	}
+  
+// 	// Fetch the page and update the cache
+// 	async get() {
+// 	  try {
+// 		const pageURL = ``; // URL of the page to cache
+// 		const cacheId = `pageURL/ + ${this.getId()}`; // Get the ID of the page to cache (to be implemented by the user)
+  
+// 		// Fetch the page content
+// 		const response = await fetch(pageURL);
+		
+// 		if (!response.ok) {
+// 		  throw new Error(`Failed to fetch the page: ${response.status}`);
+// 		}
+  
+// 		// Convert the HTML content to string
+// 		const htmlContent = await response.text();
+  
+// 		// Return the cached data in a structured format
+// 		return { id: cacheId, cachedData: htmlContent };
+		
+// 	  } catch (e) {
+// 		console.log("CACHING ERROR:", e);
+// 	  }
+// 	}
+//   }
+  
+  // Define PageCacheResource as the cache source
+  //PageCache.sourcedFrom(PageCacheResource);
+  
+  /*
+	  Usage Instructions:
+  
+	  1. Implement the `getId()` method to define how cache IDs are generated.
+	  2. Customize `pageURL` based on where the page is hosted.
+	  3. Call this URL to access the cached content:
+		 http://localhost:9926/PageCacheResource/{yourCacheId}
+  
+	  Example: 
+	  - Define your own logic for `getId()` to uniquely identify pages.
+	  - The returned `cachedData` will contain the HTML as a string.
+  */
 
-    //     if(maxAge === "0") {
-    //       console.error(`received max-age 0 from origin: ${cacheInfo}`)
-    //     }
 
-    //     if (maxAge)
-    //       // we can set a specific expiration time by setting context.expiresAt
-    //       // we are converting from seconds to milliseconds, but we aren't using the full
-    //       // max-age because we are using stale-while-revalidate, so this is the time until
-    //       // we refresh from origin, but _not_ the time until we consider the record
-    //       // fully expired and requiring revalidation _before_ returning it. So we kind
-    //       // of split the difference here by setting it at 70% of the max-age
-    //       context.expiresAt = Date.now() + maxAge * (1000 * EXPIRE_PERCENT);
-    //     response.data.cacheControl = cacheInfo;
+  
+ 
 
-	// write code for cache control
 
-}
+
+
 
 // The code below is the a class that is used to update the cache
 export class PageCacheResource extends PageCache {
@@ -107,10 +154,6 @@ export class PageCacheResource extends PageCache {
 		super.invalidate();
 	  }
 
-	  // TODO: 
-	  //const cacheId = this.getId()
-	  //pageURL = 'http://somehost.com/' + cacheId
-	  // response.byte as an optimization
 	
 	async get() {
 		try{
@@ -134,17 +177,17 @@ PageCache.sourcedFrom(PageCacheResource);
 //http://localhost:9926/PageCache/<cacheId>
 
 
-// TODO: need to clean up this repo and turn it into a template 
 
-//TODO:  need to set expiration time for cache
-
-//TODO:  need to configure when cache needs to be updated in table
 
 // TODO: need to create a README.md file with instructions on how to implement partial page caching
 
 
 
-// TODO: 
+// TODO: EXTRA
+
+
+
+
 
 //export class PageCache extends tables.PageCache {
 // 	get() {
