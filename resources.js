@@ -61,7 +61,8 @@ export class ExamplePageCacheResource extends Resource {
 
 // ***********EXAMPLE IMPLEMENTATION OF HTML-ONLY CACHE RETURN************
 
-  
+// This is usefule if you are caching pages at scale and want to reduce the response payload 
+
 
 /* 
 
@@ -89,46 +90,8 @@ export class ExamplePageCache extends PageCache {
 
 /********************************************************************************************************** */
 
+
 /*
-
-A class used to update the cache for a specific page
-export class PageCacheResource extends PageCache {
-
-	// Invalidate the cache if necessary
-	invalidate() {
-	  super.invalidate();
-	}
-  
-	// Fetch the page and update the cache
-	async get() {
-	  try {
-		const pageURL = ``; // URL of the page to cache
-		const cacheId = `pageURL/ + ${this.getId()}`; // Get the ID of the page to cache (to be implemented by the user)
-  
-		// Fetch the page content
-		const response = await fetch(pageURL);
-		
-		if (!response.ok) {
-		  throw new Error(`Failed to fetch the page: ${response.status}`);
-		}
-  
-		// Convert the HTML content to string
-		const htmlContent = await response.text();
-  
-		// Return the cached data in a structured format
-		return { id: cacheId, cachedData: htmlContent };
-		
-	  } catch (e) {
-		console.log("CACHING ERROR:", e);
-	  }
-	}
-  }
-  
-  // Define PageCacheResource as the cache source
-  PageCache.sourcedFrom(PageCacheResource);
-  */
-  
-  /*
 	  Usage Instructions:
   
 	  1. define the cache IDs.
@@ -140,28 +103,28 @@ export class PageCacheResource extends PageCache {
 	  - The returned `cachedData` will contain the HTML as a string.
   */
 
-
-  
- 
-
-
-
-
-
-// The code below is the a class that is used to update the cache
+// A class used to update the cache for a specific page
 export class PageCacheResource extends PageCache {
 
+	// Invalidate the cache if necessary
 	invalidate() {
 		super.invalidate();
 	  }
 
-	
+	// Fetch the page and update the cache
 	async get() {
 		try{
 			const pageURL = "" // URL of the page to cache
-			const cacheId = "" // id of the page to cache
-			const response = (await fetch(pageURL)); // fetch the page and get the html content to cache
-			const convertHtmlTextToStr = await response.text(); // convert the html content to string
+			const cacheId = "" // Get the ID of the page to cache (to be implemented by the user)
+			const response = (await fetch(pageURL)); // Fetch the page content
+
+			if (!response.ok) {
+				throw new Error(`Failed to fetch the page: ${response.status}`);
+			  }
+			// Convert the HTML content to string
+			const convertHtmlTextToStr = await response.text(); 
+
+			//Return the cached data in a structured format
 			return { id: cacheId, cachedData: convertHtmlTextToStr };
 			
 		}catch(e){
@@ -171,10 +134,6 @@ export class PageCacheResource extends PageCache {
 	}
 }
 
+// you can access the cache from the browser using the following URL: http://localhost:9926/PageCache/<cacheId>
+
 PageCache.sourcedFrom(PageCacheResource);
-
-// you can access the cache from the browser using the following URL: http://localhost:9926/MyCache/testPage
-
-//http://localhost:9926/PageCache/<cacheId>
-
-
