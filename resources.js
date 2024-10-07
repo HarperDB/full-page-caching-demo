@@ -1,4 +1,4 @@
-// import page cache table
+// import PageCache table from schemas.graphql
 const {PageCache} = tables;
 
 
@@ -115,7 +115,7 @@ export class PageCacheResource extends PageCache {
 	async get() {
 		try{
 			const pageURL = "" // URL of the page to cache
-			const cacheId = "" // Get the ID of the page to cache (to be implemented by the user)
+			const cacheId = "" // the ID of the page to cache (example: https://www.birkenstock.com/us/men/ or /us/men/) 
 			const response = (await fetch(pageURL)); // Fetch the page content
 
 			if (!response.ok) {
