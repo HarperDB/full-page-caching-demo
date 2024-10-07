@@ -18,7 +18,7 @@ copy the code snippet below into your terminal to install HarperDB."
 
 
 
-```npm i harperdb``` 
+```npm i -g harperdb``` 
 
 
 ### ***Installation***
