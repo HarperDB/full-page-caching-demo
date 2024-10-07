@@ -99,7 +99,7 @@ Once the comments have been removed from this code visit the following URL in th
 
 
 
-## To learn more about caching with HarperDB visit:
+## Learn more about caching with HarperDB visit:
 
 - [HarperDB Application Caching Docs](https://docs.harperdb.io/docs/developers/applications/caching)
 
