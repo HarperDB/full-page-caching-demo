@@ -27,7 +27,7 @@ copy the code snippet below into your terminal to install HarperDB."
 
 
 
->>>> ```git clone <repository-url>```
+>>>>```git clone <repository-url>```
 
 2. ***Go to the project directory***
 
