@@ -13,7 +13,9 @@ You can visit the links below to learn more about HarperDB and application compo
 
 ### Prerequisites
 
-Before you begin, ensure that you have HarperDB installed on your machine. You can install HarperDB via npm:
+Before cloning this repository, ensure HarperDB is installed on your local machine. If it's not already installed,
+copy the code snippet below into your terminal to install HarperDB."
+
 
 
 ```npm i harperdb``` 
@@ -24,15 +26,16 @@ Before you begin, ensure that you have HarperDB installed on your machine. You c
 1. ***Clone this repository to your local machine***
 
 
-```git clone <repository-url>```
+
+>>>> ```git clone <repository-url>```
 
 2. ***Go to the project directory***
 
-```cd <repository-directory>```
+>>>```cd <repository-directory>```
 
 3. ***Start HarperDB in your project directory by running*** 
 
-```harperdb dev .```
+>>>```harperdb dev .```
 
 
 ## Implementing the Caching Solution
