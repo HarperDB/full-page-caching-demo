@@ -1,57 +1,6 @@
 // import PageCache table from schemas.graphql
 const { PageCache } = tables;
 
-// ***********EXAMPLE IMPLEMENTATION OF PAGE CACHE************
-
-/*  
-
-******* How to implement Page Caching ********
-
-
-
-export class ExamplePageCacheResource extends Resource {
-  
-	// Invalidate cache if necessary
-	invalidate() {
-	  super.invalidate();
-	}
-  
-	// Fetch and cache the page
-	async get() {
-	  try {
-		// Fetch the page content from the external source
-		const response = await fetch(`https://www.google.com/`);
-		
-		// Check if the response is successful (status code 200)
-		if (!response.ok) {
-		  throw new Error(`HTTP error! Status: ${response.status}`);
-		}
-		
-		// Convert raw HTML response to string
-		const rawHtmlToStr = await response.text();
-  
-		// Return the cache data
-		return { id: "/testPage", cachedData: rawHtmlToStr };
-		
-	  } catch (error) {
-		// Log any errors that occur during the fetch process
-		console.error("ERROR fetching page data:", error);
-	  }
-	}
-  }
-  
-  
-	// Define this class as a cache source for PageCache
-  PageCache.sourcedFrom(ExamplePageCacheResource);
-  
-
-
-
-*/
-
-/********** Call this URL to access the cache: http://localhost:9926/PageCache/testPage **********/
-
-//************************************************************************************************* */
 
 // ***********EXAMPLE IMPLEMENTATION OF HTML-ONLY CACHE RETURN************
 
@@ -83,6 +32,8 @@ export class ExamplePageCache extends PageCache {
 
 /********************************************************************************************************** */
 
+// ***********EXAMPLE IMPLEMENTATION OF PAGE CACHE************ //
+
 /*
 	  Usage Instructions:
   
@@ -94,6 +45,7 @@ export class ExamplePageCache extends PageCache {
 	  Example: 
 	  - The returned `cachedData` will contain the HTML as a string.
   */
+
 
 // A class used to update the cache for a specific page
 export class PageCacheResource extends PageCache {
