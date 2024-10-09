@@ -57,7 +57,6 @@ export class PageCacheResource extends PageCache {
    
       const pageURL = "https://www.google.com/"; // URL of the page to cache
 
-      const cacheId = `/examplePage/{this.getId}`; // the ID of the page to cache (example: https://www.birkenstock.com/us/men/ or /us/men/)
 
       const response = await fetch(pageURL); // Fetch the page content
 
@@ -75,11 +74,13 @@ export class PageCacheResource extends PageCache {
       const convertHtmlTextToStr = await response.text();
 
       //Return the cached data in a structured format
-      return { id: cacheId, cachedData: convertHtmlTextToStr };
+	 return {cachedData: convertHtmlTextToStr}
     
   }
 }
 
-// you can access the cache from the browser using the following URL: http://localhost:9926/PageCache/<cacheId>
+// you can access the cache from the browser using the following URL: http://localhost:9926/PageCache/<cacheId>(e.g. /examplePage)
+
+// The ID is set using HarperDB REST handler
 
 PageCache.sourcedFrom(PageCacheResource);
