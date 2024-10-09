@@ -49,53 +49,10 @@ Follow the comments in the code for guidance on how to set it up.
 
 
 ## Example
-
-
-
-Below is an example of how to define a custom ```PageCacheResource```
-
-Uncomment this code in the ```resource.js``` file 
-
-
-```javascript
-export class ExamplePageCacheResource extends Resource {
-    // Invalidate cache if necessary
-    invalidate() {
-        super.invalidate();
-    }
     
-    // Fetch and cache the page
-    async get() {
-        try {
-            // Fetch the page content from an external source
-            const response = await fetch(`https://www.google.com/`);
-            
-            // Check if the response is successful (status code 200)
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            
-            // Convert the raw HTML response to a string
-            const rawHtmlToStr = await response.text();
-            
-            // Return the cache data
-            return { id: "/testPage", cachedData: rawHtmlToStr };
-        
-        } catch (error) {
-            // Log any errors that occur during the fetch process
-            console.error("ERROR fetching page data:", error);
-        }
-    }
-}
+***visit the following URL in the browser to access the webpage cached***: 
 
-// Define this class as a cache source for PageCache
-PageCache.sourcedFrom(ExamplePageCacheResource);
-
-```
-
-Once the comments have been removed from this code visit the following URL in the browser to access the webpage cached. 
-
-``` http://localhost:9926/PageCache/testPage```
+``` http://localhost:9926/PageCache/examplePage```
 
 
 

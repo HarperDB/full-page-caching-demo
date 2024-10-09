@@ -70,14 +70,12 @@ export class PageCacheResource extends PageCache {
     //convert html to string
     const convertHtmlTextToStr = await response.text();
 
-   
-
     //Return the cached data in a structured format
     return { cachedData: convertHtmlTextToStr };
   }
 }
 
-// you can access the cache from the browser using the following URL: http://localhost:9926/PageCache/<cacheId>(e.g. /examplePage)
+// you can access the cache from the browser using the following URL: http://localhost:9926/PageCache/<cacheId>
 
 // The ID is set using HarperDB REST handler
 
