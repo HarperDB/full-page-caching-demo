@@ -1,7 +1,6 @@
 // import PageCache table from schemas.graphql
 const { PageCache } = tables;
 
-
 // ***********EXAMPLE IMPLEMENTATION OF HTML-ONLY CACHE RETURN************
 
 // This is usefule if you are caching pages at scale and want to reduce the response payload
@@ -46,7 +45,6 @@ export class ExamplePageCache extends PageCache {
 	  - The returned `cachedData` will contain the HTML as a string.
   */
 
-
 // A class used to update the cache for a specific page
 export class PageCacheResource extends PageCache {
   // Invalidate the cache if necessary
@@ -58,16 +56,28 @@ export class PageCacheResource extends PageCache {
   async get() {
     try {
       const pageURL = "https://www.google.com/"; // URL of the page to cache
-      const cacheId = ""; // the ID of the page to cache (example: https://www.birkenstock.com/us/men/ or /us/men/)
+
+      const cacheId = `/examplePage/{this.getId}`; // the ID of the page to cache (example: https://www.birkenstock.com/us/men/ or /us/men/)
+
       const response = await fetch(pageURL); // Fetch the page content
 
-      // Convert the HTML content to string(Use response.text()) default response is in binary
-      const convertHtmlTextToStr = await response.binary(); 
+      /**
+       * To save response as binary data, use response.arrayBuffer() instead of response.text()
+       *
+       * Example:
+       * const convertHtmlToBiuinary = await response.arrayBuffer()
+       * const byteArray = new Uint8Array(convertHtmlToBiuinary);
+       *  return { id: cacheId, cachedData: byteArray };
+       * Set cachedData type in schemas.graphql to Bytes
+       */
+
+      //convert html to string
+      const convertHtmlTextToStr = await response.text();
 
       //Return the cached data in a structured format
       return { id: cacheId, cachedData: convertHtmlTextToStr };
     } catch (e) {
-      console.log("CACHING ERROR", e);
+      throw new Error(`Error fetching cached data: ${e.message}`);
     }
   }
 }
