@@ -54,28 +54,26 @@ export class PageCacheResource extends PageCache {
 
   // Fetch the page and update the cache
   async get() {
+    const pageURL = "https://www.google.com/"; // URL of the page to cache
+
+    const response = await fetch(pageURL); // Fetch the page content
+
+    /**
+     * To save response as binary data, use response.bytes() instead of response.text()
+     *
+     * Example:
+     * const byteArray = await response.bytes();
+     *  return {cachedData: byteArray};
+     * Set cachedData type in schemas.graphql to Bytes
+     */
+
+    //convert html to string
+    const convertHtmlTextToStr = await response.text();
+
    
-      const pageURL = "https://www.google.com/"; // URL of the page to cache
 
-
-      const response = await fetch(pageURL); // Fetch the page content
-
-      /**
-       * To save response as binary data, use response.arrayBuffer() instead of response.text()
-       *
-       * Example:
-       * const convertHtmlToBiuinary = await response.arrayBuffer()
-       * const byteArray = new Uint8Array(convertHtmlToBiuinary);
-       *  return { id: cacheId, cachedData: byteArray };
-       * Set cachedData type in schemas.graphql to Bytes
-       */
-
-      //convert html to string
-      const convertHtmlTextToStr = await response.text();
-
-      //Return the cached data in a structured format
-	 return {cachedData: convertHtmlTextToStr}
-    
+    //Return the cached data in a structured format
+    return { cachedData: convertHtmlTextToStr };
   }
 }
 
