@@ -54,7 +54,7 @@ export class PageCacheResource extends PageCache {
 
   // Fetch the page and update the cache
   async get() {
-    try {
+   
       const pageURL = "https://www.google.com/"; // URL of the page to cache
 
       const cacheId = `/examplePage/{this.getId}`; // the ID of the page to cache (example: https://www.birkenstock.com/us/men/ or /us/men/)
@@ -76,9 +76,7 @@ export class PageCacheResource extends PageCache {
 
       //Return the cached data in a structured format
       return { id: cacheId, cachedData: convertHtmlTextToStr };
-    } catch (e) {
-      throw new Error(`Error fetching cached data: ${e.message}`);
-    }
+    
   }
 }
 
