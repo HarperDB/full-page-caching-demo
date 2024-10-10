@@ -1,19 +1,15 @@
 ## Here we can define any tables in our database. This example shows how we define a type as a table using
-## the type name as the table name and specifying it is an "export" available in the REST and other external protocols.
+## the type PageCache as the table name and specifying it is an "export" available in the REST and other external protocols.
 
-# This will be the table where users can store their pages they would like to cache
-# Keep this table simple
+# This table will store cached webpages to be served from cache on subsequent requests.
 type PageCache @table(expiration: 3600) @export {
-  cacheControl: String
   # Stores the Cache-Control headers for the page, which dictate how caching should be handled (e.g., max-age, no-cache).
+  cacheControl: String
 
+  # The ID as a primary key allows for uniquely identifying cached pages.
   id: ID @primaryKey
-  # The primary key representing the URL path of the cached webpage.
-  # Example: For the URL https://www.birkenstock.com/us/men/, the `id` should be "/us/men/".
-  # This allows us to uniquely identify cached pages based on their path.
 
-  cachedData: String # Set type to Bytes to save as binary
-
-  # Stores the full HTML of the cached webpage as a string.
+  # cachedData stores the full HTML of the cached webpage as a string.
   # This is the rendered content that will be served from cache on subsequent requests.
+  cachedData: String # Set type to Bytes to save as binary
 }

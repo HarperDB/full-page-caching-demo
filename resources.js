@@ -25,8 +25,6 @@ export class ExamplePageCache extends PageCache {
   }
 }
 
-********** Call this URL to access only the HTML string in the cache: http://localhost:9926/ExamplePageCache/testPage **********
-
 */
 
 /********************************************************************************************************** */
@@ -36,11 +34,10 @@ export class ExamplePageCache extends PageCache {
 /*
 	  Usage Instructions:
   
-	  1. define the cache IDs.
+	  1. define the cache ID. (The ID is set using HarperDB REST handler):
+	  	You can access the cache from the browser using the following URL: http://localhost:9926/PageCache/<cacheId>
 	  2. Customize `pageURL` based on where the page is hosted.
-	  3. Call this URL to access the cached content:
-		 http://localhost:9926/PageCacheResource/{yourCacheId}
-  
+
 	  Example: 
 	  - The returned `cachedData` will contain the HTML as a string.
   */
@@ -74,9 +71,5 @@ export class PageCacheResource extends PageCache {
     return { cachedData: convertHtmlTextToStr };
   }
 }
-
-// you can access the cache from the browser using the following URL: http://localhost:9926/PageCache/<cacheId>
-
-// The ID is set using HarperDB REST handler
 
 PageCache.sourcedFrom(PageCacheResource);
