@@ -6,10 +6,11 @@ type PageCache @table(expiration: 3600) @export {
   # Stores the Cache-Control headers for the page, which dictate how caching should be handled (e.g., max-age, no-cache).
   cacheControl: String
 
-  # The ID as a primary key allows for uniquely identifying cached pages.
-  id: ID @primaryKey
+  # The URL of the cached webpage.
+  itemPageID: String
 
   # cachedData stores the full HTML of the cached webpage as a string.
   # This is the rendered content that will be served from cache on subsequent requests.
   cachedData: String # Set type to Bytes to save as binary
 }
+
